@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="35px grid">
+          <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let assignment of assignments; let index=index">
+            <mat-card class="mat-elevation-z4" >
+              <mat-card-header>
+                <mat-card-title>#{{index+1}} {{assignment.name}}</mat-card-title>
+                <mat-icon *ngIf="assignment.returned" color="primary">check</mat-icon>
+                <mat-icon *ngIf="!assignment.returned && assignment.dueDate < currentDate" color="warn">warning</mat-icon>
+              </mat-card-header>  
+              <mat-card-subtitle> {{assignment.dueDate.getDate()}} {{months[assignment.dueDate.getMonth()]}} {{assignment.dueDate.getFullYear()}}</mat-card-subtitle>
+              <mat-card-content>
+                <p>{{assignment.descriptions}}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button>Details</button>
+                <button mat-button>Remove</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+        </div>
+</div>
