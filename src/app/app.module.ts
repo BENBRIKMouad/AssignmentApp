@@ -19,13 +19,21 @@ import { AssignmentDetailComponent } from './assignment-detail/assignment-detail
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { Routes, RouterModule } from '@angular/router';
+import { EditAssignmentComponent } from './edit-assignment/edit-assignment.component';
+const routes:Routes = [
+  {path: '', component: AssignmentsComponent},
+  {path: "home", component: AssignmentsComponent},
+  {path: "add", component: AddAssignmentComponent},
+  {path: "assignment/:id/edit", component: EditAssignmentComponent}
+];
 @NgModule({
   declarations: [
     AppComponent,
     AssignmentsComponent,
     AssignmentDetailComponent,
-    AddAssignmentComponent
+    AddAssignmentComponent,
+    EditAssignmentComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +49,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDatepickerModule, MatNativeDateModule,
     MatExpansionModule,
     MatSnackBarModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]

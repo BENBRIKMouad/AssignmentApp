@@ -1,8 +1,10 @@
 
-<app-add-assignment *ngIf="formVisible" (addAssignment)="onAddAssignment($event)">
-</app-add-assignment>
-<div class="container" *ngIf="!formVisible">
-  <button mat-flat-button color="primary" style="margin-bottom:15px" (click)="onAddAssignmentBtn()">Add assignment</button>
+
+<div class="container">
+  <a routerLink="/add">
+    <button mat-flat-button color="primary" style="margin-bottom:15px">Add assignment</button>
+  </a>
+  
   <div fxLayout="row wrap" fxLayoutGap="35px grid">
     <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%"
       *ngFor="let assignment of assignments; let index=index">
@@ -17,8 +19,11 @@
         <mat-card-content *ngIf="assignment.description">
           <app-assignment-detail [description]="assignment.description"></app-assignment-detail>
         </mat-card-content>
+
         <mat-card-actions>
+          
           <button mat-button [disabled]="assignment.returned" (click)="returnAssignment(assignment)">Mark as done</button>
+          <button mat-button (click)="onEdit(assignment)">Edit</button>
           <button mat-button (click)="onRemove(assignment)">Remove</button>
         </mat-card-actions>
       </mat-card>

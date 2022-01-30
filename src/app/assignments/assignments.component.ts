@@ -6,6 +6,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { AssignmentsService } from '../shared/assignments.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
@@ -19,43 +20,19 @@ export class AssignmentsComponent implements OnInit {
   durationInSeconds = 3;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  formVisible = false;
 
   assignments: Assignment[] = []
-  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService) { }
+  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService,private router:Router) { }
   ngOnInit(): void {
-    this.assignmentsService.getAssignment()
+    this.assignmentsService.getAssignments()
       .subscribe(assignments => {
         this.assignments = assignments;
       });
 
   }
+
   returnAssignment(assignment: Assignment) {
-    
-    this.assignmentsService.UpdateAssignment(assignment).subscribe(message=>{
-      this._snackBar.open(message, 'OK', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: this.durationInSeconds * 1000,
-      });
-    })
-  }
-  onAddAssignmentBtn() {
-    this.formVisible = true
-  }
-  onAddAssignment(assignment: Assignment) {
-    this.assignmentsService.AddAssignment(assignment).subscribe(message=>{
-      this._snackBar.open(message, 'OK', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: this.durationInSeconds * 1000,
-      });
-      this.formVisible = false;
-    })
-   
-  }
-  onRemove(assignment: Assignment) {
-    this.assignmentsService.DeleteAssignment(assignment).subscribe(message=>{
+    this.assignmentsService.returnAssignment(assignment).subscribe(message=>{
       this._snackBar.open(message, 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
@@ -64,4 +41,16 @@ export class AssignmentsComponent implements OnInit {
     })
   }
 
+  onRemove(assignment: Assignment) {
+    this.assignmentsService.deleteAssignment(assignment).subscribe(message=>{
+      this._snackBar.open(message, 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+    })
+  }
+  onEdit(assignment: Assignment) {
+    this.router.navigate([`/assignment/${assignment.id}/edit`])
+  }
 }
