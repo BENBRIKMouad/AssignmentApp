@@ -10,6 +10,7 @@ import { AssignmentsService } from '../shared/assignments.service';
   styleUrls: ['./add-assignment.component.scss']
 })
 export class AddAssignmentComponent implements OnInit {
+  title:string = "Add assignment"
   name: string = ""
   dueDate!: Date;
   description!:string;

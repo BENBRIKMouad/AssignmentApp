@@ -9,6 +9,7 @@ import { AssignmentsService } from '../shared/assignments.service';
   styleUrls: ['./edit-assignment.component.scss']
 })
 export class EditAssignmentComponent implements OnInit {
+  title:string = "Edit assignments"
   assignment?:Assignment;
   name?:string;
   dueDate?:Date;

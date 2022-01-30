@@ -21,12 +21,17 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { Routes, RouterModule } from '@angular/router';
 import { EditAssignmentComponent } from './edit-assignment/edit-assignment.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+
+import { AuthGuard } from './shared/auth.guard'
+
 const routes:Routes = [
   {path: '', component: AssignmentsComponent},
   {path: "home", component: AssignmentsComponent},
   {path: "add", component: AddAssignmentComponent},
-  {path: "assignment/:id/edit", component: EditAssignmentComponent}
+  {path: "assignment/:id/edit", component: EditAssignmentComponent, canActivate: [AuthGuard]}
 ];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +54,7 @@ const routes:Routes = [
     MatDatepickerModule, MatNativeDateModule,
     MatExpansionModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

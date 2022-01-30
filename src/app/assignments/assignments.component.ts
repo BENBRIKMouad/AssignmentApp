@@ -7,6 +7,7 @@ import {
 } from '@angular/material/snack-bar';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 })
 
 export class AssignmentsComponent implements OnInit {
+  title:string = "List of assignments"
   gridColumns: number = 2;
   months: any = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentDate = new Date();
@@ -22,7 +24,7 @@ export class AssignmentsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   assignments: Assignment[] = []
-  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService,private router:Router) { }
+  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService,private router:Router,private authService:AuthService) { }
   ngOnInit(): void {
     this.assignmentsService.getAssignments()
       .subscribe(assignments => {
@@ -52,5 +54,8 @@ export class AssignmentsComponent implements OnInit {
   }
   onEdit(assignment: Assignment) {
     this.router.navigate([`/assignment/${assignment.id}/edit`])
+  }
+  isAdmin(){
+    return this.authService.loggedIn
   }
 }
