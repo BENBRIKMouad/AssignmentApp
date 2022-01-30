@@ -1,0 +1,9 @@
+<mat-expansion-panel (opened)="panelOpenState = true"
+(closed)="panelOpenState = false" style="box-shadow:none">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{panelOpenState ? 'hide description' : 'view description'}}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <p>{{description}}</p>
+</mat-expansion-panel>

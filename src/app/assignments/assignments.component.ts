@@ -1,38 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Assignment } from './assignment.model';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { AssignmentsService } from '../shared/assignments.service';
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.scss']
 })
-export class AssignmentsComponent implements OnInit {
-  title = "list of assignments";
-  gridColumns = 2;
-  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  currentDate = new Date();
-  assignments = [
-    {
-      name: "devoir ang",
-      descriptions: "Vous devrez modifier le projet pour ajouter certaines des fonctionnalités suivantes (pas besoin de tout faire sauf si vous êtes super forts :-)",
-      dueDate: new Date("1/31/20"),
-      returned : true
-    },
-    {
-      name: "devoir bd",
-      descriptions :"voila une petite description sur ce que il faut faire dans ce devoir",
-      dueDate: new Date("2/25/22"),
-      returned : false
-    },
-    {
-      name: "devoir groovy",
-      descriptions :"",
-      dueDate: new Date("3/25/98"),
-      returned : false
-    },
-  ]
-  constructor() { }
 
+export class AssignmentsComponent implements OnInit {
+  gridColumns: number = 2;
+  months: any = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  currentDate = new Date();
+  durationInSeconds = 3;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  formVisible = false;
+
+  assignments: Assignment[] = []
+  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService) { }
   ngOnInit(): void {
+    this.assignmentsService.getAssignment()
+      .subscribe(assignments => {
+        this.assignments = assignments;
+      });
+
+  }
+  returnAssignment(assignment: Assignment) {
+    
+    this.assignmentsService.UpdateAssignment(assignment).subscribe(message=>{
+      this._snackBar.open(message, 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+    })
+  }
+  onAddAssignmentBtn() {
+    this.formVisible = true
+  }
+  onAddAssignment(assignment: Assignment) {
+    this.assignmentsService.AddAssignment(assignment).subscribe(message=>{
+      this._snackBar.open(message, 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+      this.formVisible = false;
+    })
+   
+  }
+  onRemove(assignment: Assignment) {
+    this.assignmentsService.DeleteAssignment(assignment).subscribe(message=>{
+      this._snackBar.open(message, 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+    })
   }
 
 }
