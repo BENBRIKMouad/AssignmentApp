@@ -15,16 +15,16 @@ import { AuthService } from '../shared/auth.service';
 })
 
 export class AssignmentsComponent implements OnInit {
-  title:string = "List of assignments"
+  title: string = "List of assignments"
   gridColumns: number = 2;
   months: any = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentDate = new Date();
-  durationInSeconds = 3;
+  durationInSeconds = 60;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   assignments: Assignment[] = []
-  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService,private router:Router,private authService:AuthService) { }
+  constructor(private _snackBar: MatSnackBar, private assignmentsService: AssignmentsService, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
     this.assignmentsService.getAssignments()
       .subscribe(assignments => {
@@ -34,8 +34,8 @@ export class AssignmentsComponent implements OnInit {
   }
 
   returnAssignment(assignment: Assignment) {
-    this.assignmentsService.returnAssignment(assignment).subscribe(reponse=>{
-      this._snackBar.open(reponse.message, 'OK', {
+    this.assignmentsService.returnAssignment(assignment).subscribe(reponse => {
+      this._snackBar.open(assignment.name + " returned!", 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -44,22 +44,26 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onRemove(assignment: Assignment) {
-    this.assignmentsService.deleteAssignment(assignment).subscribe(reponse=>{
+    this.assignmentsService.deleteAssignment(assignment).subscribe(reponse => {
       this._snackBar.open(reponse.message, 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
       });
       this.assignmentsService.getAssignments()
-      .subscribe(assignments => {
-        this.assignments = assignments;
-      });
+        .subscribe(assignments => {
+          this.assignments = assignments;
+        });
     })
   }
   onEdit(assignment: Assignment) {
     this.router.navigate([`/assignment/${assignment.id}/edit`])
   }
-  isAdmin(){
+  isAdmin() {
     return this.authService.loggedIn
+  }
+  isExpired(assignment: Assignment): Boolean {
+    let date = new Date(assignment.dueDate)
+    return !assignment.returned && date < new Date()
   }
 }
