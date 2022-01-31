@@ -32,7 +32,8 @@ export class EditAssignmentComponent implements OnInit {
 
     if(this.description)
     this.assignment.description = this.description;
-
+    else
+    this.assignment.description = "";
     if(this.dueDate)
     this.assignment.dueDate = this.dueDate
 
