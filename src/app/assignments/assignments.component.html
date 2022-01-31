@@ -19,8 +19,8 @@
           <mat-icon *ngIf="assignment.returned" color="primary">check</mat-icon>
           <mat-icon *ngIf="!assignment.returned && assignment.dueDate < currentDate" color="warn">warning</mat-icon>
         </mat-card-header>
-        <mat-card-subtitle> {{assignment.dueDate.getDate()}} {{months[assignment.dueDate.getMonth()]}}
-          {{assignment.dueDate.getFullYear()}}</mat-card-subtitle>
+        <mat-card-subtitle> {{assignment.dueDate | date}}
+         </mat-card-subtitle>
         <mat-card-content *ngIf="assignment.description">
           <app-assignment-detail [description]="assignment.description"></app-assignment-detail>
         </mat-card-content>

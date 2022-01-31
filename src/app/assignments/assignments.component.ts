@@ -34,8 +34,8 @@ export class AssignmentsComponent implements OnInit {
   }
 
   returnAssignment(assignment: Assignment) {
-    this.assignmentsService.returnAssignment(assignment).subscribe(message=>{
-      this._snackBar.open(message, 'OK', {
+    this.assignmentsService.returnAssignment(assignment).subscribe(reponse=>{
+      this._snackBar.open(reponse.message, 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -44,11 +44,15 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onRemove(assignment: Assignment) {
-    this.assignmentsService.deleteAssignment(assignment).subscribe(message=>{
-      this._snackBar.open(message, 'OK', {
+    this.assignmentsService.deleteAssignment(assignment).subscribe(reponse=>{
+      this._snackBar.open(reponse.message, 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
+      });
+      this.assignmentsService.getAssignments()
+      .subscribe(assignments => {
+        this.assignments = assignments;
       });
     })
   }

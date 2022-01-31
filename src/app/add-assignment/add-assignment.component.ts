@@ -28,8 +28,9 @@ export class AddAssignmentComponent implements OnInit {
     newAssignment.description = this.description;
     newAssignment.id = Math.round(Math.random() * 100000);
 
-    this.assignmentsService.AddAssignment(newAssignment).subscribe(message=>{
-      this._snackBar.open(message, 'OK', {
+    this.assignmentsService.AddAssignment(newAssignment).subscribe(reponse=>{
+      this.router.navigate(['home']);
+      this._snackBar.open(reponse.message, 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -37,6 +38,6 @@ export class AddAssignmentComponent implements OnInit {
     })
    // this.assignments.push(newAssignment);
    this.addAssignment.emit(newAssignment);
-   this.router.navigate(['home']);
+  
   }
 }

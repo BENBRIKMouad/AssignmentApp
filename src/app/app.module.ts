@@ -24,7 +24,7 @@ import { EditAssignmentComponent } from './edit-assignment/edit-assignment.compo
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { AuthGuard } from './shared/auth.guard'
-
+import { HttpClientModule } from '@angular/common/http';
 const routes:Routes = [
   {path: '', component: AssignmentsComponent},
   {path: "home", component: AssignmentsComponent},
@@ -55,7 +55,8 @@ const routes:Routes = [
     MatExpansionModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    RouterModule.forRoot(routes)
+    HttpClientModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]
