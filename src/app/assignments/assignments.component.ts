@@ -19,7 +19,7 @@ export class AssignmentsComponent implements OnInit {
   gridColumns: number = 2;
   months: any = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentDate = new Date();
-  durationInSeconds = 60;
+  durationInSeconds = 3;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
