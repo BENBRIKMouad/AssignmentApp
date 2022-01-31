@@ -12,7 +12,7 @@
             <input matInput placeholder="Edition du nom" [(ngModel)]="name" name="name">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Edition du descriptions" [(ngModel)]="description" name="description">
+            <textarea rows="9" matInput placeholder="Edition du descriptions" [(ngModel)]="description" name="description"></textarea>
         </mat-form-field>
         <mat-form-field>
             <input matInput [matDatepicker]="picker" placeholder="Edition de la date" [(ngModel)]="dueDate"

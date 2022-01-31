@@ -5,5 +5,5 @@
       {{panelOpenState ? 'hide description' : 'view description'}}
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <p>{{description}}</p>
+  <div [innerHTML]="description"></div>
 </mat-expansion-panel>
